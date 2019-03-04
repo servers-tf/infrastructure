@@ -102,9 +102,23 @@ resource "google_compute_firewall" "firewall-web-allow-egress-all-to-internet" {
     }
 }
 
+resource "google_compute_firewall" "firewall-sandbox-allow-ingress-ssh-from-internet" {
+    # Convention: <Resource>-<Subnet>-<Action>-<Direction>-<Service>-<To/From>-<Source/Destination>
+    name = "firewall-sandbox-allow-ssh-ingress-from-internet"
+    network = "${google_compute_network.main-vpc.self_link}"
+    direction = "INGRESS"
+    priority = 1
+    source_ranges = ["0.0.0.0/0"]
+    target_tags = ["sandbox-subnet"]
+    deny {
+        protocol = "tcp"
+        ports = ["22"]
+    }
+}
+
 resource "google_compute_firewall" "firewall-sandbox-deny-ingress-all-from-internet" {
     # Convention: <Resource>-<Subnet>-<Action>-<Direction>-<Service>-<To/From>-<Source/Destination>
-    name = "usc1-firewall-sandbox-deny-ingress-from-internet"
+    name = "firewall-sandbox-deny-ingress-from-internet"
     network = "${google_compute_network.main-vpc.self_link}"
     direction = "INGRESS"
     priority = 2
@@ -136,7 +150,7 @@ resource "google_compute_firewall" "firewall-sandbox-allow-egress-all-to-interne
 
 resource "google_compute_firewall" "firewall-gameserver-allow-ingress-srcds-from-internet" {
     # Convention: <Resource>-<Subnet>-<Action>-<Direction>-<Service>-<To/From>-<Source/Destination>
-    name = "any-firewall-gameserver-allow-ingress-srcds-from-internet"
+    name = "firewall-gameserver-allow-ingress-srcds-from-internet"
     network = "${google_compute_network.main-vpc.self_link}"
     direction = "INGRESS"
     priority = 3
