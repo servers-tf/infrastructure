@@ -1,5 +1,5 @@
 resource "aws_route53_zone" "private" {
-    name = "stf.internal"
+    name = "${var.internal_domain}"
 
     vpc {
         vpc_id = "${aws_vpc.main.id}"
@@ -7,8 +7,8 @@ resource "aws_route53_zone" "private" {
 }
 
 resource "aws_vpc_dhcp_options" "domains" {
-    domain_name = "stf.internal"
-    domain_name_servers = ["10.0.0.2", "8.8.8.8"]
+    domain_name = "${var.internal_domain}"
+    domain_name_servers = "${var.dns_resolvers}"
 }
 
 resource "aws_vpc_dhcp_options_association" "domains" {

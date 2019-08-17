@@ -1,7 +1,8 @@
 # Reserved for use by NAT's and other appliances
 resource "aws_subnet" "reserved" {
     vpc_id = "${aws_vpc.main.id}"
-    cidr_block = "10.0.0.0/24"
+    cidr_block = "${var.reserved_subnet_cidr}"
+    map_public_ip_on_launch  = false
 
     tags = {
         Name = "reserved"
@@ -24,7 +25,8 @@ resource "aws_route_table_association" "reserved" {
 # Not able to access other subnets
 resource "aws_subnet" "sandbox" {
     vpc_id = "${aws_vpc.main.id}"
-    cidr_block = "10.0.1.0/24"
+    cidr_block = "${var.sandbox_subnet_cidr}"
+    map_public_ip_on_launch = true
 
     tags = {
         Name = "sandbox"
@@ -48,7 +50,8 @@ resource "aws_route_table_association" "sandbox" {
 # Frontends
 resource "aws_subnet" "web" {
     vpc_id = "${aws_vpc.main.id}"
-    cidr_block = "10.0.2.0/24"
+    cidr_block = "${var.web_subnet_cidr}"
+    map_public_ip_on_launch = true
 
     tags = {
         Name = "web"
@@ -71,7 +74,8 @@ resource "aws_route_table_association" "web" {
 # Not accessiable from the internet
 resource "aws_subnet" "database" {
     vpc_id = "${aws_vpc.main.id}"
-    cidr_block = "10.0.3.0/24"
+    cidr_block = "${var.database_subnet_cidr}"
+    map_public_ip_on_launch = false
 
     tags = {
         Name = "database"
@@ -93,7 +97,8 @@ resource "aws_route_table_association" "database" {
 # Used to house all the gameservers
 resource "aws_subnet" "gameserver" {
     vpc_id = "${aws_vpc.main.id}"
-    cidr_block = "10.0.4.0/22"
+    cidr_block = "${var.gameserver_subnet_cidr}"
+    map_public_ip_on_launch = true
 
     tags = {
         Name = "gameserver"

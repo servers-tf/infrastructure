@@ -14,7 +14,7 @@ resource "aws_network_acl" "sandbox" {
     }
     ingress {
         protocol = "tcp"
-        rule_no = 22
+        rule_no = 101
         action = "allow"
         cidr_block = "0.0.0.0/0"
         from_port = 0

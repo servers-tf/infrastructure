@@ -30,4 +30,3 @@ jobs:
       uses: hashicorp/terraform-github-actions/plan@v0.3.5
       env:
         TF_ACTION_WORKING_DIR: "."
-        TF_ACTION_WORKSPACE: "default"
