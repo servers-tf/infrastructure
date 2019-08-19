@@ -6,7 +6,6 @@ resource "aws_iam_instance_profile" "tf2_competitive" {
 resource "aws_iam_role" "tf2_competitive" {
     name = "tf2_competitive"
     path = "/"
-
     assume_role_policy = file("${path.module}/policies/sts_assumerole.json")
 }
 
