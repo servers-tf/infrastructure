@@ -37,3 +37,12 @@ module "gameservers" {
     gameserver_instance_size = "c5.large"
     gameserver_use_spot = true
 }
+
+module "automation" {
+    source = "./automation"
+    
+    clean_amis = [
+        {keep = "3", family = "tf2-competitive"},
+        {keep = "1", family = "base"}
+    ]
+}
