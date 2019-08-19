@@ -3,16 +3,6 @@ resource "aws_network_acl" "sandbox" {
     subnet_ids = ["${aws_subnet.sandbox.id}"]
 
     ingress {
-        protocol = "-1"
-        rule_no = 100
-        action = "deny"
-        cidr_block = "0.0.0.0/0"
-        icmp_code = -1
-        icmp_type = -1
-        from_port = 0
-        to_port = 0
-    }
-    ingress {
         protocol = "tcp"
         rule_no = 101
         action = "allow"
@@ -33,7 +23,7 @@ resource "aws_network_acl" "sandbox" {
         rule_no = 999
         action = "allow"
         cidr_block = "0.0.0.0/0"
-        from_port  = 32768
+        from_port = 0
         to_port = 65535
     }
 }
@@ -43,16 +33,6 @@ resource "aws_network_acl" "web" {
     vpc_id = "${aws_vpc.main.id}"
     subnet_ids = ["${aws_subnet.web.id}"]
 
-    ingress {
-        protocol = "-1"
-        rule_no = 100
-        action = "deny"
-        cidr_block = "0.0.0.0/0"
-        icmp_code = -1
-        icmp_type = -1
-        from_port = 0
-        to_port = 0
-    }
     ingress {
         protocol = "tcp"
         rule_no = 101
@@ -90,7 +70,7 @@ resource "aws_network_acl" "web" {
         rule_no = 999
         action = "allow"
         cidr_block = "0.0.0.0/0"
-        from_port  = 32768
+        from_port = 0
         to_port = 65535
     }
 }
@@ -101,16 +81,6 @@ resource "aws_network_acl" "gameserver" {
     subnet_ids = ["${aws_subnet.gameserver.id}"]
 
     ingress {
-        protocol = "-1"
-        rule_no = 100
-        action = "deny"
-        cidr_block = "0.0.0.0/0"
-        icmp_code = -1
-        icmp_type = -1
-        from_port = 0
-        to_port = 0
-    }
-    ingress {
         protocol = "tcp"
         rule_no = 101
         action = "allow"
@@ -120,18 +90,68 @@ resource "aws_network_acl" "gameserver" {
     }
     ingress {
         protocol = "tcp"
+        rule_no = 200
+        action = "allow"
+        cidr_block = "0.0.0.0/0"
+        from_port = 27015
+        to_port = 27015
+    }
+    ingress {
+        protocol = "tcp"
+        rule_no = 201
+        action = "allow"
+        cidr_block = "0.0.0.0/0"
+        from_port = 27020
+        to_port = 27020
+    }
+    ingress {
+        protocol = "udp"
+        rule_no = 202
+        action = "allow"
+        cidr_block = "0.0.0.0/0"
+        from_port = 27015
+        to_port = 27015
+    }
+    ingress {
+        protocol = "udp"
+        rule_no = 203
+        action = "allow"
+        cidr_block = "0.0.0.0/0"
+        from_port = 27020
+        to_port = 27020
+    }
+    
+    ingress {
+        protocol = "tcp"
+        rule_no = 998
+        action = "allow"
+        cidr_block = "0.0.0.0/0"
+        from_port = 32768
+        to_port = 65535
+    }
+    ingress {
+        protocol = "udp"
         rule_no = 999
         action = "allow"
         cidr_block = "0.0.0.0/0"
         from_port = 32768
         to_port = 65535
     }
+    
     egress {
         protocol = "tcp"
+        rule_no = 998
+        action = "allow"
+        cidr_block = "0.0.0.0/0"
+        from_port = 0
+        to_port = 65535
+    }
+    egress {
+        protocol = "udp"
         rule_no = 999
         action = "allow"
         cidr_block = "0.0.0.0/0"
-        from_port  = 32768
+        from_port = 0
         to_port = 65535
     }
 }

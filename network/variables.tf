@@ -13,6 +13,11 @@ variable "dns_resolvers" {
     default = ["10.0.0.2", "8.8.8.8"]
 }
 
+variable "ssh_ip_addrs" {
+    type = "list"
+    default = ["0.0.0.0/0"]
+}
+
 variable "reserved_subnet_cidr" {
     type = "string"
     default = "10.0.0.0/24"
