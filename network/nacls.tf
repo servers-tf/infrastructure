@@ -28,7 +28,6 @@ resource "aws_network_acl" "sandbox" {
     }
 }
 
-
 resource "aws_network_acl" "web" {
     vpc_id = "${aws_vpc.main.id}"
     subnet_ids = ["${aws_subnet.web.id}"]
@@ -75,6 +74,27 @@ resource "aws_network_acl" "web" {
     }
 }
 
+resource "aws_network_acl" "database" {
+    vpc_id = "${aws_vpc.main.id}"
+    subnet_ids = ["${aws_subnet.database.id}"]
+
+    ingress {
+        protocol = "tcp"
+        rule_no = 100
+        action = "allow"
+        cidr_block = "${var.web_subnet_cidr}"
+        from_port = 0
+        to_port = 65535
+    }
+    egress {
+        protocol = "tcp"
+        rule_no = 999
+        action = "allow"
+        cidr_block = "${var.web_subnet_cidr}"
+        from_port = 0
+        to_port = 65535
+    }
+}
 
 resource "aws_network_acl" "gameserver" {
     vpc_id = "${aws_vpc.main.id}"
@@ -120,7 +140,6 @@ resource "aws_network_acl" "gameserver" {
         from_port = 27020
         to_port = 27020
     }
-    
     ingress {
         protocol = "tcp"
         rule_no = 998

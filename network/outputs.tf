@@ -25,3 +25,7 @@ output "gameserver_subnet_id" {
 output "ssh_securitygroup_id" {
     value = aws_security_group.home_ssh.id
 }
+
+output "internal_dns_zone_id" {
+    value = aws_route53_zone.private.id
+}
