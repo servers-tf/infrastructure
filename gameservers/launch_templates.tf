@@ -1,24 +1,19 @@
-# data "aws_ami" "tf2_competitive" {
-#     executable_users = ["self"]
-#     most_recent = true
-#     owners = ["self"]
-#
-#     filter {
-#         name   = "tag:Family"
-#         values = ["tf2-competitive"]
-#     }
-#
-#     filter {
-#         name   = "state"
-#         values = ["available"]
-#     }
-#
-# }
+data "aws_ami" "tf2_competitive" {
+    most_recent = true
+
+    filter {
+        name   = "name"
+        values = ["tf2-competitive-*"]
+    }
+
+    owners = ["${data.aws_caller_identity.current.account_id}"]
+}
 
 resource "aws_launch_template" "tf2_competitive" {
     name = "tf2-competitive"
 
     # Provisioning
+    image_id = "${data.aws_ami.tf2_competitive.id}"
     instance_type = "${var.gameserver_instance_size}"
     key_name = "${var.ssh_keyname}"
     user_data = "${base64encode(<<EOF
