@@ -1,5 +1,7 @@
 name: Terraform
-on: [pull_request]
+on:
+  pull_request:
+    types: [opened, synchronize, rerequested]
 
 jobs:
   on-pull-request:
@@ -8,11 +10,6 @@ jobs:
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v1
-      
-    - name: Filter to PR Opened
-      uses: actions/bin/filter@master
-      with:
-        args: "action 'opened|rerequested|synchronize'"
             
     - name: Terraform Init
       uses: hashicorp/terraform-github-actions/init@v0.4.0
