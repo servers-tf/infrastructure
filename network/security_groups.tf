@@ -1,13 +1,13 @@
 resource "aws_security_group" "home_ssh" {
     name = "Home SSH"
     description = "SSH from home"
-    vpc_id = "${aws_vpc.main.id}"
+    vpc_id = aws_vpc.main.id
 
     ingress {
         from_port = 22
         to_port = 22
         protocol = "tcp"
-        cidr_blocks =  "${var.ssh_ip_addrs}"
+        cidr_blocks =  var.ssh_ip_addrs
         self = true
     }
     
@@ -26,7 +26,7 @@ resource "aws_security_group" "home_ssh" {
 resource "aws_security_group" "packer_ssh" {
     name = "Packer SSH"
     description = "SSH for Packer"
-    vpc_id = "${aws_vpc.main.id}"
+    vpc_id = aws_vpc.main.id
 
     ingress {
         from_port = 22

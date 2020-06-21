@@ -1,27 +1,27 @@
 variable "vpc_id" {
-    type = "string"
+    type = string
 }
 
 variable "web_subnet_id" {
-    type = "string"
+    type = string
 }
 
 variable "elasticsearch_name" {
-    type = "string"
+    type = string
 }
 
 variable "elasticsearch_instance_size" {
-    type = "string"
+    type = string
 }
 
 variable "elasticsearch_disk_size" {
-    type = "string"
+    type = string
 }
 
 variable "internal_dns_zone_id" {
-    type = "string"
+    type = string
 }
 
 variable "whitelist_ipaddrs" {
-    type = "list"
+    type = list
 }
