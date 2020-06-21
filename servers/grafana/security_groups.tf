@@ -17,6 +17,13 @@ resource "aws_security_group" "grafana" {
         cidr_blocks =  var.whitelist_ipaddrs
     }
     
+    ingress {
+        from_port = 443
+        to_port = 443
+        protocol = "tcp"
+        cidr_blocks =  "${var.whitelist_ipaddrs}"
+    }
+    
     egress {
         from_port   = 0
         to_port     = 0
