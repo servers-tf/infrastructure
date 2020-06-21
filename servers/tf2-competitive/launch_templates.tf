@@ -52,10 +52,10 @@ resource "aws_launch_template" "tf2_competitive" {
     # Disk
     ebs_optimized = true
     block_device_mappings {
-        device_name = data.aws_ami.block_device_mappings[0].device_name
+        device_name = "/dev/sda1"
         ebs {
-            volume_size = data.aws_ami.block_device_mappings[0].volume_size
-            delete_on_termination = data.aws_ami.block_device_mappings[0].delete_on_termination
+            volume_size = 11
+            delete_on_termination = true
         }
     }
     
