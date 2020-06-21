@@ -3,9 +3,7 @@
     "Statement": [
         {
             "Action": "es:*",
-            "Principal": {
-              "AWS": "*"
-            },
+            "Principal": "*",
             "Effect": "Allow",
             "Resource": "arn:aws:es:${region}:${account_id}:domain/${name}/*"
         }

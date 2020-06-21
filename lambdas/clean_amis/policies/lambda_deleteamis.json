@@ -1,0 +1,15 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "ec2:DescribeImages",
+                "ec2:DeregisterImage",
+                "ec2:DescribeSnapshots",
+                "ec2:DeleteSnapshot"
+            ],
+            "Resource": "*",
+            "Effect": "Allow"
+        }
+    ]
+}

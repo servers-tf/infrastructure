@@ -26,52 +26,30 @@ module "network" {
     gameserver_subnet_cidr = "10.0.4.0/22"
 }
 
-module "gameservers" {
-    source = "./gameservers"
+module "efs" {
+    source = "./efs"
 
     vpc_id = module.network.vpc_id
-    ssh_securitygroup_id = module.network.ssh_securitygroup_id
-    ssh_keyname = "backdoor"
-
-    gameserver_subnet_id = module.network.gameserver_subnet_id
-    gameserver_instance_size = "c5.large"
-    gameserver_use_spot = true
-}
-
-module "automation" {
-    source = "./automation"
-    
-    clean_amis = [
-        {keep = "3", family = "tf2-competitive"},
-        {keep = "1", family = "grafana"},
-        {keep = "1", family = "base"}
+    subnet_ids = [
+        module.network.gameserver_subnet_id,
+        module.network.web_subnet_id
     ]
 }
 
-module "elasticsearch" {
-    source = "./elasticsearch"
-    
-    vpc_id = module.network.vpc_id
-    web_subnet_id = module.network.database_subnet_id
+module "gameservers" {
+    source = "./servers/tf2-competitive"
 
-    elasticsearch_name = "elasticsearch"
-    elasticsearch_instance_size = "t2.small.elasticsearch"
-    elasticsearch_disk_size = "10"
-    internal_dns_zone_id = module.network.internal_dns_zone_id
-    
-    whitelist_ipaddrs = ["99.31.76.144/32"]
+    vpc_id = module.network.vpc_id
+    security_group_ids = [
+        module.network.ssh_securitygroup_id,
+        module.efs.security_group_id
+    ]
+    ssh_keyname = "backdoor"
+    subnet_id = module.network.gameserver_subnet_id
+    instance_size = "c5.large"
+    use_spot = true
 }
 
-module "grafana" {
-    source = "./grafana"
-    
-    vpc_id = module.network.vpc_id
-    ssh_securitygroup_id = module.network.ssh_securitygroup_id
-    ssh_keyname = "backdoor"
-
-    grafana_subnet_id = module.network.web_subnet_id
-    grafana_instance_size = "t2.micro"
-    external_dns_zone_id = "Z3AGAJ48ZCJ4VC"
-    
-    whitelist_ipaddrs = ["99.31.76.144/32"]
+module "clean_amis" {
+    source = "./lambdas/clean_amis"
 }
