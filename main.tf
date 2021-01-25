@@ -29,8 +29,8 @@ module "network" {
 resource "aws_dynamodb_table" "tf2_competitive_auth" {
     name = "tf2_competitive_auth"
     hash_key = "steam_id"
-    read_capacity  = 5
-    write_capacity = 5
+    read_capacity  = 1
+    write_capacity = 1
 
     attribute {
         name = "steam_id"
