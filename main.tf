@@ -26,6 +26,18 @@ module "network" {
     gameserver_subnet_cidr = "10.0.4.0/22"
 }
 
+resource "aws_dynamodb_table" "tf2_competitive_auth" {
+    name = "tf2_competitive_auth"
+    hash_key = "steam_id"
+    read_capacity  = 5
+    write_capacity = 5
+
+    attribute {
+        name = "steam_id"
+        type = "S"
+    }
+}
+
 module "gameservers" {
     source = "./servers/tf2-competitive"
 
