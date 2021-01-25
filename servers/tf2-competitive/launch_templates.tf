@@ -31,7 +31,7 @@ resource "aws_launch_template" "tf2_competitive" {
     instance_type = var.instance_size
     key_name = var.ssh_keyname
     user_data = base64encode(local.userdata)
-    
+
     # instance_market_options {
     #     market_type = "spot"
     #     spot_options {
@@ -54,11 +54,11 @@ resource "aws_launch_template" "tf2_competitive" {
     block_device_mappings {
         device_name = "/dev/sda1"
         ebs {
-            volume_size = 11
+            volume_size = 20
             delete_on_termination = true
         }
     }
-    
+
     # Permissions
     iam_instance_profile {
         name = aws_iam_instance_profile.tf2_competitive.name

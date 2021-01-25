@@ -22,3 +22,10 @@ resource "aws_iam_role_policy" "ec2_describe" {
 
     policy = file("${path.module}/policies/ec2_describe.json")
 }
+
+resource "aws_iam_role_policy" "dynamo_scan" {
+    name = "dynamo_scan"
+    role = aws_iam_role.tf2_competitive.id
+
+    policy = file("${path.module}/policies/dynamo_scan.json")
+}
